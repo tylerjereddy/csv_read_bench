@@ -22,12 +22,19 @@ for row_count in list_row_counts:
 # run timings and store data
 for row_count in list_row_counts:
     fname = "csv_input_{row_count}.csv".format(row_count=row_count)
+    # first for NumPy
     start = time.time()
     np.loadtxt(fname=fname,
                delimiter=',')
     end = time.time()
     print("row_count:", row_count)
-    print("time (s):", end - start)
+    print("NumPy time (s):", end - start)
+
+    # and now for pandas
+    start = time.time()
+    pandas.read_csv(fname)
+    end = time.time()
+    print("pandas time (s):", end - start)
 
 print("np.__version__:", np.__version__)
 print("pandas.__version__:", pandas.__version__)
