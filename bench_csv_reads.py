@@ -58,3 +58,37 @@ for row_count in list_row_counts:
 
 print("np.__version__:", np.__version__)
 print("pandas.__version__:", pandas.__version__)
+
+# plot / summarize the results
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.set_yscale('log')
+ax.set_xscale('log')
+ax.set_xlabel('log CSV file lines')
+ax.set_ylabel('log avg time sec')
+
+for label, color in zip(['numpy', 'pandas'],
+                        ['black', 'green']):
+    for row_count in list_row_counts:
+        if row_count == 20:
+            ax.scatter(row_count, 
+                       results_dict[label][str(row_count)]['avg'],
+                       color=color,
+                       alpha=0.4,
+                       label=label)
+        else: # don't duplicate labels
+            ax.scatter(row_count, 
+                       results_dict[label][str(row_count)]['avg'],
+                       color=color,
+                       alpha=0.4)
+        ax.errorbar(row_count,
+                    results_dict[label][str(row_count)]['avg'],
+                    yerr=results_dict[label][str(row_count)]['std'],
+                    linestyle="None",
+                    color=color)
+ax.legend()
+ax.set_title("Comparing np.loadtxt and pandas.read_csv performance\n"
+             "over 10 replicates at each csv file line count size.")
+            
+fig.savefig('loadtxt_vs_read_csv.png',
+            dpi=300)
