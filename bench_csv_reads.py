@@ -2,7 +2,7 @@
 # for simple CSV reading case(s)
 
 import numpy as np
-#import pandas
+import pandas
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
@@ -28,3 +28,6 @@ for row_count in list_row_counts:
     end = time.time()
     print("row_count:", row_count)
     print("time (s):", end - start)
+
+print("np.__version__:", np.__version__)
+print("pandas.__version__:", pandas.__version__)
